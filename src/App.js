@@ -14,7 +14,7 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: '"Inter", "Helvetica", "Arial", sans-serif',
+    fontFamily: '"Poppins", "Helvetica", "Arial", sans-serif',
     h4: {
       fontWeight: 700,
     },
