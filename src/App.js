@@ -7,10 +7,10 @@ import DynamicForm from './components/DynamicForm';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#2563eb',
+      main: '#451a03',
     },
     background: {
-      default: '#99f6e4',
+      default: '#fcd34d',
     },
   },
   typography: {

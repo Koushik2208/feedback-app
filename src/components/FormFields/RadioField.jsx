@@ -7,6 +7,7 @@ export const RadioField = ({ field, value, onChange }) => (
     <RadioGroup
       value={value || ''}
       onChange={(e) => onChange(field.name, e.target.value)}
+      row
     >
       {field.options.map((option) => (
         <FormControlLabel

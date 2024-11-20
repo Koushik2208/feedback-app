@@ -68,9 +68,9 @@ const DynamicForm = ({ config = defaultConfig }) => {
               sx={{
                 mt: 4,
                 py: 1.5,
-                backgroundColor: "#2563eb",
+                backgroundColor: "#451a03",
                 "&:hover": {
-                  backgroundColor: "#1d4ed8",
+                  backgroundColor: "#451a0380",
                 },
               }}
             >

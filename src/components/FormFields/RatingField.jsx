@@ -9,6 +9,7 @@ export const RatingField = ({ field, value, onChange }) => (
       value={value || 0}
       onChange={(_, newValue) => onChange(field.name, newValue)}
       max={field.max || 5}
+      sx={{ '& .MuiRating-icon': { marginRight: 2 } }}
       icon={<Star style={{ width: 32, height: 32, fill: '#facc15' }} />}
       emptyIcon={<Star style={{ width: 32, height: 32 }} />}
     />

@@ -7,7 +7,8 @@ import {
   RadioField,
   CheckboxField,
   SelectField,
-  GradientScaleField
+  GradientScaleField,
+  TextAreaField
 } from './FormFields';
  
 const FormField = ({ field, value, onChange }) => {
@@ -20,7 +21,7 @@ const FormField = ({ field, value, onChange }) => {
     radio: RadioField,
     checkbox: CheckboxField,
     select: SelectField,
-    textarea: TextField,
+    textarea: TextAreaField,
     gradientScale: GradientScaleField
   };
  

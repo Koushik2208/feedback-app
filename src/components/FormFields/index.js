@@ -6,3 +6,4 @@ export * from './RadioField';
 export * from './CheckboxField';
 export * from './SelectField';
 export * from './GradientScaleField';
+export * from './TextAreaField';

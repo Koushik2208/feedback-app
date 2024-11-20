@@ -1,10 +1,10 @@
-import React from 'react';
-import { Box, Typography, Slider } from '@mui/material';
+import React from "react";
+import { Box, Typography, Slider } from "@mui/material";
 
-export const GradientScaleField = ({ 
-  field,            // Field object containing label, min, max, etc.
-  value,            // Current value of the scale
-  onChange          // Function to handle value change
+export const GradientScaleField = ({
+  field, // Field object containing label, min, max, etc.
+  value, // Current value of the scale
+  onChange, // Function to handle value change
 }) => {
   // Function to calculate thumb color
   const getThumbColor = (value) => {
@@ -43,26 +43,26 @@ export const GradientScaleField = ({
         valueLabelDisplay="auto"
         sx={{
           maxWidth: 500,
-          mx: 'auto',
+          mx: "auto",
           mt: 2,
           // No background for the track
-          '& .MuiSlider-track': {
-            background: 'none',
-            border: 'none',
+          "& .MuiSlider-track": {
+            background: "none",
+            border: "none",
           },
           // Gradient on the rail
-          '& .MuiSlider-rail': {
+          "& .MuiSlider-rail": {
             background: `linear-gradient(to right, red, yellow, green)`,
             height: 8,
             borderRadius: 4,
           },
           // Dynamic thumb styling
-          '& .MuiSlider-thumb': {
-            backgroundColor: getThumbColor(value),
+          "& .MuiSlider-thumb": {
+            backgroundColor: value ? getThumbColor(value) : "rgb(255, 0, 0)",
             border: `2px solid ${getThumbColor(value)}`,
             width: 24,
             height: 24,
-            transition: 'background-color 0.3s ease, border-color 0.3s ease',
+            transition: "background-color 0.3s ease, border-color 0.3s ease",
           },
         }}
       />
