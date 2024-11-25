@@ -1,9 +1,9 @@
 import React from "react";
-import { Box, Typography, TextField, FormLabel } from "@mui/material";
+import { Box, TextField, FormLabel } from "@mui/material";
 
 export const TextAreaField = ({ field, value, onChange }) => (
   <Box>
-    <FormLabel>{field.label}</FormLabel>
+    <FormLabel sx={{ fontSize: "14px" }}>{field.label}</FormLabel>
     {/* Text Area */}
     <TextField
       value={value || ''}
@@ -13,6 +13,11 @@ export const TextAreaField = ({ field, value, onChange }) => (
       rows={4} // Adjust the height of the text area
       variant="outlined"
       fullWidth
+      sx={{
+        '& .MuiOutlinedInput-root': {
+          borderRadius: '10px', // Customize border radius here
+        },
+      }}
     />
   </Box>
 );

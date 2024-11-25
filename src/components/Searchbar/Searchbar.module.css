@@ -1,0 +1,49 @@
+.searchbar {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  padding: 5px 10px;
+  background-color: #fff;
+  flex-grow: 1;
+  /* max-width: 489px; */
+}
+
+.input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  color: #555;
+  padding: 8px;
+  border-radius: 30px;
+}
+
+.input::placeholder {
+  color: #aaa;
+}
+
+.iconButton {
+  background-color: #6a1b9a; /* Purple button color */
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.iconButton:hover {
+  background-color: #4a0072; /* Darker purple on hover */
+}
+
+.iconButton:focus {
+  outline: none;
+}
+
+.searchbar:hover {
+  border-color: #aaa;
+}

@@ -1,0 +1,14 @@
+.nav-space {
+  margin-top: 64px;
+}
+
+.survey-list {
+  margin: 30px 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.nav-space .container {
+  padding-top: 64px;
+}

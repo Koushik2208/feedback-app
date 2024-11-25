@@ -8,12 +8,14 @@ export const formConfig = {
           type: "text",
           name: "name",
           label: "Your Name",
+          width: "50%",
           required: true,
         },
         {
           type: "email",
           name: "email",
           label: "Email Address",
+          width: "50%",
           required: true,
         },
       ],
@@ -30,6 +32,11 @@ export const formConfig = {
         {
           type: "emotion",
           name: "emotion",
+          label: "How do you feel about our service?",
+        },
+        {
+          type: "emoji",
+          name: "emoji",
           label: "How do you feel about our service?",
         },
         {
@@ -90,6 +97,11 @@ export const formConfig = {
             { label: "Customer Support", value: "support" },
             { label: "Other", value: "other" },
           ],
+        },
+        {
+          type:"likeDislike",
+          name: "likeDislike",
+          label: "Do you like our service?",
         },
         {
           type: "textarea",
