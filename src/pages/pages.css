@@ -12,3 +12,18 @@
 .nav-space .container {
   padding-top: 64px;
 }
+
+/* grid */
+
+.responsive-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* Single column by default */
+  gap: 16px;
+  margin-bottom: 25px;
+}
+
+@media (min-width: 768px) {
+  .responsive-grid {
+    grid-template-columns: 1fr 1fr; /* Two columns for medium screens and up */
+  }
+}

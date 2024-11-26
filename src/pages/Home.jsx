@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./pages.css";
 import Header from "../components/Header";
 
-import { Button, Link, Container } from "@mui/material";
+import { Button, Link, Container, Grid2 } from "@mui/material";
 import { CirclePlus } from "lucide-react";
 import SurveyCard from "../components/SurveyCard";
 import { SelectField } from "../components/FormFields";
+import axiosInstance from "../utils/axiosConfig";
 
 const Home = () => {
+  const role = localStorage.getItem("role");
   const surveyData = [
     {
       id: 1,
@@ -31,59 +33,93 @@ const Home = () => {
       responses: "200",
     },
   ];
-  const selectField = {
+
+  const [department, setDepartment] = useState("");
+  const [surveys, setSurveys] = useState([]);
+  const [departmentField, setDepartmentField] = useState({
     name: "department",
     placeholder: "--Select Department--",
-    options: [
-      { value: "Option1", label: "Option 1" },
-      { value: "Option2", label: "Option 2" },
-      { value: "Option3", label: "Option 3" },
-    ],
-  };
-  const [department, setDepartment] = useState("");
+    options: [],
+  });
 
   const handleSelectChange = (field, value) => {
     setDepartment(value);
   };
 
+  const fetchDepartments = async () => {
+    try {
+      if (departmentField.options.length > 0) return;
+      const response = await axiosInstance.get(`/account/department/`);
+      const options = response.data.results.map((d) => ({
+        value: d.id,
+        label: d.name,
+      }));
+      setDepartmentField((prev) => ({
+        ...prev,
+        options,
+      }));
+    } catch (error) {
+      console.error("Error fetching departments:", error.message);
+    }
+  };
+
+  const fetchSurveys = async () => {
+    try {
+      const response = await axiosInstance.get(
+        `/account/get_survey_by_department/?department_id=${department}`
+      );
+      console.log("surveys", response.data);
+      setSurveys(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchDepartments();
+    fetchSurveys();
+  }, [department]);
+
   return (
     <section className="nav-space">
       <Header title="Feedback Survey List" />
       <Container maxWidth="md">
-        <div className="row">
-          <div className="col-6">
-            <SelectField
-              field={selectField}
-              value={department}
-              onChange={handleSelectChange}
-            />
-          </div>
-          <div className="col-6">
-            <Link href="/create-survey" underline="none">
-              <Button
-                variant="outlined"
-                color="primary"
-                fullWidth
-                sx={{ height: "55px" }}
-              >
-                <CirclePlus size={20} className="me-2" />
-                Add New Survey Form
-              </Button>
-            </Link>
-          </div>
-        </div>
-
+        {role === "Admin" && (
+          <Grid2 container spacing={2} alignItems="center">
+            <Grid2 item xs={12} sm={6} sx={{ flexGrow: 1 }}>
+              <SelectField
+                field={departmentField}
+                value={department}
+                onChange={handleSelectChange}
+              />
+            </Grid2>
+            <Grid2 item xs={12} sm={6} sx={{ flexGrow: 1 }}>
+              <Link href="/create-survey" underline="none">
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  fullWidth
+                  sx={{ height: "55px" }}
+                >
+                  <CirclePlus size={20} style={{ marginRight: 8 }} />
+                  Add New Survey Form
+                </Button>
+              </Link>
+            </Grid2>
+          </Grid2>
+        )}
         <div className="survey-list">
-          {surveyData.map((survey) => (
-            <SurveyCard
-              key={survey.id}
-              id={survey.id}
-              title={survey.title}
-              status={survey.status}
-              date={survey.date}
-              responses={survey.responses}
-            />
-          ))}
+          {surveys.length > 0 &&
+            surveys.map((survey) => (
+              <SurveyCard
+                key={survey.survey_title}
+                id={survey.survey_title}
+                title={survey.survey_title}
+                status={"Active"}
+                date={survey.date}
+                responses={survey.responses}
+              />
+            ))}
         </div>
       </Container>
     </section>

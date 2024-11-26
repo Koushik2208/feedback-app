@@ -9,6 +9,7 @@ export const EmotionField = ({ field, value, onChange }) => (
       sx={{
         display: "flex",
         justifyContent: "space-around",
+        flexWrap: "wrap",
         gap: 2,
         mt: 2,
       }}
@@ -25,8 +26,9 @@ export const EmotionField = ({ field, value, onChange }) => (
             backgroundColor: "transparent",
             "&:hover": {
               color: emotion.color, // Changes both emoji and text color on hover
-              "& .MuiTypography-root": {  // This targets the Typography component for the label text
-                color: emotion.color,  // Change the text color to match the hover effect
+              "& .MuiTypography-root": {
+                // This targets the Typography component for the label text
+                color: emotion.color, // Change the text color to match the hover effect
               },
             },
             display: "flex",

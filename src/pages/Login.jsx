@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import FormField from "../components/FormField";
 import { loginConfig as defaultConfig } from "../config/loginConfig";
+import axiosInstance from "../utils/axiosConfig";
 
 const Login = ({ config = defaultConfig }) => {
   const [formData, setFormData] = useState({});
@@ -21,9 +22,16 @@ const Login = ({ config = defaultConfig }) => {
     }));
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    window.location.href = "/";
+  const handleSubmit = async (event) => {
+    try {
+      event.preventDefault();
+      const response = await axiosInstance.post(`account/api/login/`, formData);
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("role", response.data.role?.role_name);
+      window.location.href = "/";
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
   };
 
   return (
@@ -62,7 +70,10 @@ const Login = ({ config = defaultConfig }) => {
                   </Stack>
                 </Box>
               ))}
-              <Box textAlign="center" sx={{textAlign:"end", mt: "10px !important" }}>
+              <Box
+                textAlign="center"
+                sx={{ textAlign: "end", mt: "10px !important" }}
+              >
                 <Typography
                   variant="body2"
                   color="primary"

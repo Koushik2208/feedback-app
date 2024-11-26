@@ -60,7 +60,7 @@ const SurveyCard = ({ id, title, status, date, responses }) => {
           }}
         >
           {/* Modify Date */}
-          <Box
+          {/* <Box
             sx={{
               display: "flex",
               alignItems: "center",
@@ -70,10 +70,10 @@ const SurveyCard = ({ id, title, status, date, responses }) => {
           >
             <Clock size={16} />
             <Typography variant="body2">Modify {date}</Typography>
-          </Box>
+          </Box> */}
 
           {/* Responses */}
-          <Box
+          {/* <Box
             sx={{
               display: "flex",
               alignItems: "center",
@@ -83,7 +83,7 @@ const SurveyCard = ({ id, title, status, date, responses }) => {
           >
             <Users size={16} />
             <Typography variant="body2">{responses} Responses</Typography>
-          </Box>
+          </Box> */}
         </Box>
       </Box>
 
