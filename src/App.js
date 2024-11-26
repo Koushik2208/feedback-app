@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import DynamicForm from "./components/DynamicForm";
 import { Home, Login, CreateSurvey, SurveyDetails } from "./pages";
 import Navbar from "./components/Navbar/Navbar";
-// import ProtectedRoute from "./utils/ProtectedRoute";
+import ProtectedRoute from "./utils/ProtectedRoute";
 
 const theme = createTheme({
   palette: {
@@ -50,14 +50,14 @@ function App() {
       <Router>
         <Routes>
           <Route path="/login" element={<Login />} />
-          {/* <Route element={<ProtectedRoute />}> */}
-          <Route path="/" element={<Navbar />}>
-            <Route index element={<Home />} />
-            <Route path="create-survey" element={<CreateSurvey />} />
-            <Route path="survey-details/:id" element={<SurveyDetails />} />
-            <Route path="dynamic-form" element={<DynamicForm />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/" element={<Navbar />}>
+              <Route index element={<Home />} />
+              <Route path="create-survey" element={<CreateSurvey />} />
+              <Route path="survey-details/:id" element={<SurveyDetails />} />
+              <Route path="dynamic-form" element={<DynamicForm />} />
+            </Route>
           </Route>
-          {/* </Route> */}
         </Routes>
       </Router>
     </ThemeProvider>

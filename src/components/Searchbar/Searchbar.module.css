@@ -47,3 +47,13 @@
 .searchbar:hover {
   border-color: #aaa;
 }
+
+@media screen and (max-width: 768px) {
+  .searchbar {
+    padding: 5px;
+  }
+  .input {
+    font-size: 12px;
+    padding: 4px;
+  }
+}
