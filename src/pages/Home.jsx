@@ -112,8 +112,8 @@ const Home = () => {
           {surveys.length > 0 &&
             surveys.map((survey) => (
               <SurveyCard
-                key={survey.survey_title}
-                id={survey.survey_title}
+                key={survey.department_id}
+                id={survey.department_id}
                 title={survey.survey_title}
                 status={"Active"}
                 date={survey.date}

@@ -54,7 +54,10 @@ function App() {
             <Route path="/" element={<Navbar />}>
               <Route index element={<Home />} />
               <Route path="create-survey" element={<CreateSurvey />} />
-              <Route path="survey-details/:id" element={<SurveyDetails />} />
+              <Route
+                path="survey-details/:department_id"
+                element={<SurveyDetails />}
+              />
               <Route path="dynamic-form" element={<DynamicForm />} />
             </Route>
           </Route>

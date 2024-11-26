@@ -221,6 +221,7 @@ const CreateSurvey = () => {
       errors.push("Survey title is required.");
     if (!surveyData.survey_description.trim())
       errors.push("Survey description is required.");
+    if (!surveyData.department_id) errors.push("Department is required.");
 
     // Check sections and questions
     surveyData.sections.forEach((section, sectionIndex) => {
