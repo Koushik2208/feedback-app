@@ -9,10 +9,24 @@ import {
   Checkbox,
   Typography,
   Paper,
-  FormControl,
+  Container,
 } from "@mui/material";
-import { Trash2, Plus, List, CheckSquare, Type } from "lucide-react";
-import { TextAreaField } from "../components/FormFields";
+import {
+  Trash2,
+  Plus,
+  List,
+  CheckSquare,
+  Type,
+  SquareMenu,
+} from "lucide-react";
+import {
+  EmotionField,
+  GradientScaleField,
+  RatingField,
+  SelectField,
+  TextAreaField,
+} from "../components/FormFields";
+import Header from "../components/Header";
 
 const CreateSurvey = () => {
   const [department, setDepartment] = useState("");
@@ -26,14 +40,51 @@ const CreateSurvey = () => {
     },
   ]);
 
+  const rating = {
+    type: "rating",
+    name: "satisfaction",
+    label: "Overall Satisfaction",
+    max: 5,
+  };
+
+  const emotion = {
+    type: "emotion",
+    name: "emotion",
+    label: "How do you feel about our service?",
+  };
+
+  const gradient = {
+    type: "gradientScale",
+    label: "How likely are you to recommend our product?",
+    name: "experience",
+    min: 0,
+    max: 10,
+    marks: [
+      { value: 0, label: "0" },
+      { value: 5, label: "5" },
+      { value: 10, label: "10" },
+    ],
+  };
+
+  const selectField = {
+    name: "department",
+    placeholder: "--Select Department--",
+    options: [
+      { value: "Option1", label: "Option 1" },
+      { value: "Option2", label: "Option 2" },
+      { value: "Option3", label: "Option 3" },
+    ],
+  };
+
   const questionTypes = [
     { value: "Short Answer", label: "Short Answer", icon: <Type /> },
+    { value: "Dropdown", label: "Dropdown", icon: <SquareMenu /> },
     { value: "Multiple Choice", label: "Multiple Choice", icon: <List /> },
     { value: "Check Boxes", label: "Check Boxes", icon: <CheckSquare /> },
   ];
 
-  const handleChange = (event) => {
-    setDepartment(event.target.value);
+  const handleChange = (field, value) => {
+    setDepartment(value);
   };
 
   const addQuestion = () => {
@@ -90,7 +141,8 @@ const CreateSurvey = () => {
 
   return (
     <section className="nav-space">
-      <div className="container">
+      <Header title={"Create Survey"} />
+      <Container maxWidth="md">
         <div className="row" style={{ marginBottom: "25px" }}>
           <div className="col-md-6">
             <TextField
@@ -100,34 +152,11 @@ const CreateSurvey = () => {
             />
           </div>
           <div className="col-md-6">
-            <FormControl fullWidth>
-              <Select
-                labelId="simple-dropdown-label"
-                id="simple-dropdown"
-                value={department}
-                onChange={handleChange}
-                displayEmpty
-                sx={{
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    borderRadius: "10px",
-                  },
-                  "& .MuiInputLabel-root": {
-                    fontSize: "14px",
-                  },
-                  "& .MuiSelect-select": {
-                    textAlign: "center",
-                    backgroundColor: "#fff",
-                  },
-                }}
-              >
-                <MenuItem value="" disabled>
-                  --Select Department--
-                </MenuItem>
-                <MenuItem value="Option1">Option 1</MenuItem>
-                <MenuItem value="Option2">Option 2</MenuItem>
-                <MenuItem value="Option3">Option 3</MenuItem>
-              </Select>
-            </FormControl>
+            <SelectField
+              field={selectField}
+              value={department}
+              onChange={handleChange}
+            />
           </div>
         </div>
         <Paper
@@ -186,7 +215,9 @@ const CreateSurvey = () => {
               />
 
               {/* Options for Multiple Choice and Check Boxes */}
-              {(q.type === "Multiple Choice" || q.type === "Check Boxes") && (
+              {(q.type === "Multiple Choice" ||
+                q.type === "Check Boxes" ||
+                q.type === "Dropdown") && (
                 <Box>
                   {q.options.map((option, index) => (
                     <Box key={index} display="flex" alignItems="center" mb={1}>
@@ -240,8 +271,34 @@ const CreateSurvey = () => {
           >
             Add Question
           </Button>
+          <Paper
+            elevation={1}
+            sx={{
+              p: 4,
+              marginBottom: "40px",
+              gap: "40px",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <RatingField field={rating} />
+            <EmotionField field={emotion} />
+            <GradientScaleField field={gradient} />
+          </Paper>
+
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "#7C3996",
+              "&:hover": { backgroundColor: "#7C399680" },
+              marginBottom: "40px",
+            }}
+            fullWidth
+          >
+            Save Survey
+          </Button>
         </Box>
-      </div>
+      </Container>
     </section>
   );
 };

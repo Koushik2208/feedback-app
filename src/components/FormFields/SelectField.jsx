@@ -3,20 +3,29 @@ import { FormControl, FormLabel, Select, MenuItem } from "@mui/material";
 
 export const SelectField = ({ field, value, onChange }) => (
   <FormControl fullWidth>
-    <FormLabel sx={{ fontSize: "14px" }}>{field.label}</FormLabel>
+    {field.label && (
+      <FormLabel sx={{ fontSize: "14px", mb: 1 }}>{field.label}</FormLabel>
+    )}
     <Select
       value={value || ""}
       onChange={(e) => onChange(field.name, e.target.value)}
       sx={{
-        mt: 1,
         "& .MuiOutlinedInput-notchedOutline": {
           borderRadius: "10px", // Customize border radius here
         },
         "& .MuiInputLabel-root": {
           fontSize: "14px", // Customize font size here
         },
+        "& .MuiSelect-select": {
+          backgroundColor: "white", // Set the background color to white
+          textAlign: "center",
+        },
       }}
+      displayEmpty
     >
+      <MenuItem value="" disabled sx={{ fontSize: "14px" }}>
+        {field.placeholder}
+      </MenuItem>
       {field.options.map((option) => (
         <MenuItem
           key={option.value}

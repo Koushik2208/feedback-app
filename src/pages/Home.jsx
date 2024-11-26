@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import "./pages.css";
 import Header from "../components/Header";
 
-import { Select, MenuItem, FormControl, Button, Link } from "@mui/material";
+import { Button, Link, Container } from "@mui/material";
 import { CirclePlus } from "lucide-react";
 import SurveyCard from "../components/SurveyCard";
-// import { useEffect } from "react";
+import { SelectField } from "../components/FormFields";
 
 const Home = () => {
   const surveyData = [
@@ -31,51 +31,32 @@ const Home = () => {
       responses: "200",
     },
   ];
+  const selectField = {
+    name: "department",
+    placeholder: "--Select Department--",
+    options: [
+      { value: "Option1", label: "Option 1" },
+      { value: "Option2", label: "Option 2" },
+      { value: "Option3", label: "Option 3" },
+    ],
+  };
   const [department, setDepartment] = useState("");
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   if (!token) {
-  //     window.location.href = "/login";
-  //   }
-  // }, []);
 
-  const handleChange = (event) => {
-    setDepartment(event.target.value);
+  const handleSelectChange = (field, value) => {
+    setDepartment(value);
   };
 
   return (
     <section className="nav-space">
       <Header title="Feedback Survey List" />
-      <div className="container">
+      <Container maxWidth="md">
         <div className="row">
           <div className="col-6">
-            <FormControl fullWidth>
-              <Select
-                labelId="simple-dropdown-label"
-                id="simple-dropdown"
-                value={department}
-                onChange={handleChange}
-                displayEmpty
-                sx={{
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    borderRadius: "10px",
-                  },
-                  "& .MuiInputLabel-root": {
-                    fontSize: "14px",
-                  },
-                  "& .MuiSelect-select": {
-                    textAlign: "center",
-                  },
-                }}
-              >
-                <MenuItem value="" disabled>
-                  --Select Department--
-                </MenuItem>
-                <MenuItem value="Option1">Option 1</MenuItem>
-                <MenuItem value="Option2">Option 2</MenuItem>
-                <MenuItem value="Option3">Option 3</MenuItem>
-              </Select>
-            </FormControl>
+            <SelectField
+              field={selectField}
+              value={department}
+              onChange={handleSelectChange}
+            />
           </div>
           <div className="col-6">
             <Link href="/create-survey" underline="none">
@@ -104,7 +85,7 @@ const Home = () => {
             />
           ))}
         </div>
-      </div>
+      </Container>
     </section>
   );
 };

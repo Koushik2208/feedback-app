@@ -99,7 +99,7 @@ export const formConfig = {
           ],
         },
         {
-          type:"likeDislike",
+          type: "likeDislike",
           name: "likeDislike",
           label: "Do you like our service?",
         },
@@ -108,6 +108,16 @@ export const formConfig = {
           name: "comments",
           label: "Additional Comments",
           rows: 4,
+        },
+      ],
+    },
+    {
+      title: "File Upload",
+      fields: [
+        {
+          type: "file",
+          name: "file",
+          label: "Upload a File",
         },
       ],
     },

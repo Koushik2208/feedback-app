@@ -42,7 +42,6 @@ export const GradientScaleField = ({
         marks={field.marks}
         valueLabelDisplay="auto"
         sx={{
-          maxWidth: 500,
           mx: "auto",
           mt: 2,
           // No background for the track

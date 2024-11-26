@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   TextField,
   RatingField,
@@ -11,9 +11,10 @@ import {
   GradientScaleField,
   TextAreaField,
   LikeDislikeField,
-  PasswordField
-} from './FormFields';
- 
+  PasswordField,
+  FileUploadField,
+} from "./FormFields";
+
 const FormField = ({ field, value, onChange, width }) => {
   const fieldComponents = {
     text: TextField,
@@ -28,16 +29,19 @@ const FormField = ({ field, value, onChange, width }) => {
     select: SelectField,
     textarea: TextAreaField,
     gradientScale: GradientScaleField,
-    likeDislike: LikeDislikeField
+    likeDislike: LikeDislikeField,
+    file: FileUploadField,
   };
- 
+
   const Component = fieldComponents[field.type];
-  
+
   if (!Component) {
     return null;
   }
- 
-  return <Component field={field} value={value} onChange={onChange} width={width} />;
+
+  return (
+    <Component field={field} value={value} onChange={onChange} width={width} />
+  );
 };
- 
+
 export default FormField;
