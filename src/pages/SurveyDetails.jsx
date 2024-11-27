@@ -30,7 +30,8 @@ const SurveyDetails = () => {
       const response = await axiosInstance.get(
         `/account/get_survey_by_department/?department_id=${department_id}`
       );
-      let config = await convertSurveyConfig(response.data?.[0]);
+      let config = convertSurveyConfig(response.data?.[0]);
+      console.log(config, response.data?.[0]);
       setDataConfig(config);
       setLoading(false);
     } catch (error) {

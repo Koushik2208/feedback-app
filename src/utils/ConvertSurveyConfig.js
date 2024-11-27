@@ -3,13 +3,13 @@ export const convertSurveyConfig = (inputSurvey) => {
   const typeMapping = {
     "Multiple Choice": "radio",
     Dropdown: "select",
-    "Short Answer": "textarea",
+    "Short Answer": "text",
     Paragraph: "textarea",
     "File Upload": "file",
     "Check Boxes": "checkbox",
     "Star Rating": "rating",
     "Emoji Rating": "emotion",
-    "Scale Rating": "slider",
+    "Scale Rating": "gradientScale",
     // Add more mappings as needed
   };
 
@@ -20,43 +20,53 @@ export const convertSurveyConfig = (inputSurvey) => {
       title: section.section_title,
       fields: section.questions_and_options.map((question) => {
         // Determine the field type
-        const questionType =
-          question.options && question.options.length > 0
-            ? question.options[0].question_type
-            : "Short Answer";
+        const questionType = question.question_type;
 
         const fieldType = typeMapping[questionType] || "text";
 
         // Create the base field configuration
         const fieldConfig = {
           type: fieldType,
-          name: question.question_text.toLowerCase().replace(/\s+/g, "_"),
+          name: question.question_text,
           label: question.question_text,
         };
 
         // Add options for select, radio, and checkbox types
         if (
-          ["select", "radio", "checkbox"].includes(fieldType) &&
+          [
+            "select",
+            "radio",
+            "checkbox",
+            "gradientScale",
+            "emotion",
+            "rating",
+          ].includes(fieldType) &&
           question.options
         ) {
           fieldConfig.options = question.options.map((option) => ({
             label: option.option_text,
-            value: option.option_text.toLowerCase().replace(/\s+/g, "_"),
+            value: option.option_text,
           }));
         }
 
         // Add special configurations for specific types
         switch (fieldType) {
+          case "text":
+            fieldConfig.labelOnTop = true;
+            break;
           case "textarea":
             fieldConfig.rows = 4;
             break;
-          case "Star Rating":
+          case "select":
+            fieldConfig.placeholder = "--Select an option--";
+            break;
+          case "rating":
             fieldConfig.max = 5;
             break;
-          case "Emoji Rating":
+          case "emotion":
             fieldConfig.max = 5;
             break;
-          case "Scale Rating":
+          case "gradientScale":
             fieldConfig.min = 0;
             fieldConfig.max = 10;
             fieldConfig.marks = [
@@ -71,7 +81,6 @@ export const convertSurveyConfig = (inputSurvey) => {
           default:
             break;
         }
-
         return fieldConfig;
       }),
     })),
