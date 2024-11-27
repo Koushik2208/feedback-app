@@ -1,4 +1,5 @@
 export const patientDetailConfig = {
+  noSubmit: true,
   sections: [
     {
       title: "Patient Information",

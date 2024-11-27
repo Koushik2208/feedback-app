@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Typography, Button, Paper, Stack } from "@mui/material";
 import FormField from "./FormField";
 import { formConfig as defaultConfig } from "../config/formConfig";
 
-const DynamicForm = ({ config = defaultConfig, formSubmit }) => {
-  const [formData, setFormData] = useState({});
+const DynamicForm = ({ config = defaultConfig, formSubmit, data = {} }) => {
+  const [formData, setFormData] = useState(data);
 
   const handleFieldChange = (name, value) => {
     setFormData((prev) => ({
@@ -17,6 +17,12 @@ const DynamicForm = ({ config = defaultConfig, formSubmit }) => {
     event.preventDefault();
     formSubmit(formData);
   };
+
+  useEffect(() => {
+    if (data) {
+      setFormData(data);
+    }
+  }, [data]);
 
   return (
     <>
@@ -91,21 +97,23 @@ const DynamicForm = ({ config = defaultConfig, formSubmit }) => {
             </Box>
           ))}
 
-          <Button
-            type="submit"
-            variant="contained"
-            size="large"
-            sx={{
-              mt: 4,
-              py: 1.5,
-              backgroundColor: "#7C3996",
-              "&:hover": {
-                backgroundColor: "#7C399680",
-              },
-            }}
-          >
-            {config.buttonTitle || "Submit Feedback"}
-          </Button>
+          {!config.noSubmit && (
+            <Button
+              type="submit"
+              variant="contained"
+              size="large"
+              sx={{
+                mt: 4,
+                py: 1.5,
+                backgroundColor: "#7C3996",
+                "&:hover": {
+                  backgroundColor: "#7C399680",
+                },
+              }}
+            >
+              {config.buttonTitle || "Submit Feedback"}
+            </Button>
+          )}
         </Stack>
       </form>
     </>

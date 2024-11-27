@@ -6,10 +6,10 @@ import { SelectField } from "../components/FormFields";
 import { useParams } from "react-router-dom";
 import axiosInstance from "../utils/axiosConfig";
 import { convertSurveyConfig } from "../utils/ConvertSurveyConfig";
+import { patientDetailConfig } from "../config/patientDetailConfig";
 
 const SurveyDetails = () => {
   const [patient, setPatient] = useState("");
-  const [survey, setSurvey] = useState([]);
   const [dataConfig, setDataConfig] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -30,10 +30,7 @@ const SurveyDetails = () => {
       const response = await axiosInstance.get(
         `/account/get_survey_by_department/?department_id=${department_id}`
       );
-      console.log("surveys", response.data?.[0]);
-      setSurvey(response.data?.[0]);
       let config = await convertSurveyConfig(response.data?.[0]);
-      console.log("dataConfig", config);
       setDataConfig(config);
       setLoading(false);
     } catch (error) {
@@ -47,6 +44,7 @@ const SurveyDetails = () => {
     try {
       const response = await axiosInstance.get("/account/patient_records/");
       let options = response.data.results.map((patient) => ({
+        ...patient,
         value: patient.id,
         label: patient.patient_name,
       }));
@@ -77,12 +75,12 @@ const SurveyDetails = () => {
         />
         {loading && <p>Loading...</p>}
         {error && <p>{error}</p>}
-        <Box sx={{ mt: 4 }}>
-          {dataConfig ? (
-            <DynamicForm config={dataConfig} />
-          ) : (
-            <p>No survey data available</p>
-          )}
+        <Box sx={{ mt: 4, display: "flex", flexDirection: "column", gap: 4 }}>
+          <DynamicForm
+            config={patientDetailConfig}
+            data={patientField.options.filter((p) => p.id === patient)[0]}
+          />
+          {dataConfig && patient && <DynamicForm config={dataConfig} />}
         </Box>
       </Container>
     </section>

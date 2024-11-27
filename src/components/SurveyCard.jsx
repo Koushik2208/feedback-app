@@ -112,8 +112,8 @@ const SurveyCard = ({ id, title, status, date, responses }) => {
             "aria-labelledby": "basic-button",
           }}
         >
-          <MenuItem onClick={handleView}>View</MenuItem>
-          <MenuItem onClick={handleEdit}>Edit</MenuItem>
+          <MenuItem onClick={handleView}>Individual Responses</MenuItem>
+          <MenuItem onClick={handleEdit}>Summary</MenuItem>
         </Menu>
       </Box>
     </Card>
