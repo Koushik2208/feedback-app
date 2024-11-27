@@ -3,7 +3,7 @@ import { Box, Typography, Button, Paper, Stack } from "@mui/material";
 import FormField from "./FormField";
 import { formConfig as defaultConfig } from "../config/formConfig";
 
-const DynamicForm = ({ config = defaultConfig }) => {
+const DynamicForm = ({ config = defaultConfig, formSubmit }) => {
   const [formData, setFormData] = useState({});
 
   const handleFieldChange = (name, value) => {
@@ -15,8 +15,7 @@ const DynamicForm = ({ config = defaultConfig }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Form submitted:", formData);
-    alert("Thank you for your feedback!");
+    formSubmit(formData);
   };
 
   return (
@@ -38,7 +37,13 @@ const DynamicForm = ({ config = defaultConfig }) => {
         <Stack spacing={4}>
           {config.sections.map((section, sectionIndex) => (
             <Box key={sectionIndex}>
-              <Paper elevation={1} sx={{ p: 4, borderRadius: "20px" }}>
+              <Paper
+                elevation={section.insideDialog ? 0 : 1}
+                sx={{
+                  p: section.insideDialog ? 0 : 4,
+                  borderRadius: section.insideDialog ? "0px" : "20px",
+                }}
+              >
                 <Typography variant="h6" gutterBottom sx={{ mb: 3 }}>
                   {section.title}
                 </Typography>
@@ -99,7 +104,7 @@ const DynamicForm = ({ config = defaultConfig }) => {
               },
             }}
           >
-            Submit Feedback
+            {config.buttonTitle || "Submit Feedback"}
           </Button>
         </Stack>
       </form>

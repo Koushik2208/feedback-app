@@ -3,47 +3,58 @@ import "./pages.css";
 import Header from "../components/Header";
 
 import { Button, Link, Container, Grid2 } from "@mui/material";
-import { CirclePlus } from "lucide-react";
+import { styled } from "@mui/material/styles";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import IconButton from "@mui/material/IconButton";
+import { CirclePlus, X } from "lucide-react";
 import SurveyCard from "../components/SurveyCard";
 import { SelectField } from "../components/FormFields";
 import axiosInstance from "../utils/axiosConfig";
+import { departmentConfig } from "../config/departmentConfig";
+import DynamicForm from "../components/DynamicForm";
 
 const Home = () => {
   const role = localStorage.getItem("role");
-  const surveyData = [
-    {
-      id: 1,
-      title: "Customer Satisfaction Survey",
-      status: "Active",
-      date: "2024-03-20",
-      responses: "145",
-    },
-    {
-      id: 2,
-      title: "Employee Feedback Survey",
-      status: "Inactive",
-      date: "2024-02-15",
-      responses: "98",
-    },
-    {
-      id: 3,
-      title: "Product Review Survey",
-      status: "Active",
-      date: "2024-03-10",
-      responses: "200",
-    },
-  ];
 
   const [department, setDepartment] = useState("");
   const [surveys, setSurveys] = useState([]);
+  const [open, setOpen] = useState(false);
   const [departmentField, setDepartmentField] = useState({
     name: "department",
     placeholder: "--Select Department--",
     options: [],
   });
 
+  const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+    "& .MuiDialogContent-root": {
+      padding: theme.spacing(2),
+    },
+    "& .MuiDialogActions-root": {
+      padding: theme.spacing(1),
+    },
+  }));
+
   const handleSelectChange = (field, value) => {
     setDepartment(value);
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const formSubmit = async (data) => {
+    try {
+      await axiosInstance.post(`/account/department/`, data);
+      setOpen(false);
+      fetchDepartments();
+    } catch (error) {
+      console.log("error : ", error);
+    }
   };
 
   const fetchDepartments = async () => {
@@ -85,13 +96,18 @@ const Home = () => {
       <Header title="Feedback Survey List" />
       <Container maxWidth="md">
         {role === "Admin" && (
-          <Grid2 container spacing={2} alignItems="center">
+          <Grid2 container spacing={2} alignItems="center" sx={{ mb: 2 }}>
             <Grid2 item xs={12} sm={6} sx={{ flexGrow: 1 }}>
-              <SelectField
-                field={departmentField}
-                value={department}
-                onChange={handleSelectChange}
-              />
+              <Button
+                variant="outlined"
+                color="primary"
+                fullWidth
+                sx={{ height: "55px" }}
+                onClick={handleClickOpen}
+              >
+                <CirclePlus size={20} style={{ marginRight: 8 }} />
+                Add New Department
+              </Button>
             </Grid2>
             <Grid2 item xs={12} sm={6} sx={{ flexGrow: 1 }}>
               <Link href="/create-survey" underline="none">
@@ -108,6 +124,11 @@ const Home = () => {
             </Grid2>
           </Grid2>
         )}
+        <SelectField
+          field={departmentField}
+          value={department}
+          onChange={handleSelectChange}
+        />
         <div className="survey-list">
           {surveys.length > 0 &&
             surveys.map((survey) => (
@@ -122,6 +143,30 @@ const Home = () => {
             ))}
         </div>
       </Container>
+      <BootstrapDialog
+        onClose={handleClose}
+        aria-labelledby="customized-dialog-title"
+        open={open}
+      >
+        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+          Add New Department
+        </DialogTitle>
+        <IconButton
+          aria-label="close"
+          onClick={handleClose}
+          sx={(theme) => ({
+            position: "absolute",
+            right: 8,
+            top: 8,
+            color: theme.palette.grey[500],
+          })}
+        >
+          <X />
+        </IconButton>
+        <DialogContent dividers>
+          <DynamicForm config={departmentConfig} formSubmit={formSubmit} />
+        </DialogContent>
+      </BootstrapDialog>
     </section>
   );
 };

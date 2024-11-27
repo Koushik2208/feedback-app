@@ -3,7 +3,7 @@ export const convertSurveyConfig = (inputSurvey) => {
   const typeMapping = {
     "Multiple Choice": "radio",
     Dropdown: "select",
-    "Short Answer": "text",
+    "Short Answer": "textarea",
     Paragraph: "textarea",
     "File Upload": "file",
     Checkbox: "checkbox",
