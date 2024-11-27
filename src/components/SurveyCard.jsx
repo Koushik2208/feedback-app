@@ -8,7 +8,7 @@ import {
   Menu,
   MenuItem,
 } from "@mui/material";
-import { Clock, Users, MoreHorizontal } from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
 
 const SurveyCard = ({ id, title, status, date, responses }) => {
   const [anchorEl, setAnchorEl] = useState(null);

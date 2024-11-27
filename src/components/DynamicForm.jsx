@@ -14,6 +14,7 @@ const DynamicForm = ({ config = defaultConfig, formSubmit, data = {} }) => {
   };
 
   const handleSubmit = (event) => {
+    console.log("Form submitted:", formData);
     event.preventDefault();
     formSubmit(formData);
   };
@@ -22,7 +23,7 @@ const DynamicForm = ({ config = defaultConfig, formSubmit, data = {} }) => {
     if (data) {
       setFormData(data);
     }
-  }, [data]);
+  }, []);
 
   return (
     <>

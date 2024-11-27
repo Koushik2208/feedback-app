@@ -6,7 +6,7 @@ export const convertSurveyConfig = (inputSurvey) => {
     "Short Answer": "textarea",
     Paragraph: "textarea",
     "File Upload": "file",
-    Checkbox: "checkbox",
+    "Check Boxes": "checkbox",
     "Star Rating": "rating",
     "Emoji Rating": "emotion",
     "Scale Rating": "slider",

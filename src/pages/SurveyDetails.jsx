@@ -52,10 +52,24 @@ const SurveyDetails = () => {
         ...prev,
         options,
       }));
-      // Handle the patient records data here
     } catch (error) {
       console.error("Error fetching patient records:", error);
-      // Handle error accordingly
+    }
+  };
+
+  const patientSubmit = async (data) => {
+    try {
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const surveySubmit = async (data) => {
+    try {
+      console.log(data);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -75,13 +89,16 @@ const SurveyDetails = () => {
         />
         {loading && <p>Loading...</p>}
         {error && <p>{error}</p>}
-        <Box sx={{ mt: 4, display: "flex", flexDirection: "column", gap: 4 }}>
-          <DynamicForm
-            config={patientDetailConfig}
-            data={patientField.options.filter((p) => p.id === patient)[0]}
-          />
-          {dataConfig && patient && <DynamicForm config={dataConfig} />}
-        </Box>
+        {dataConfig && patient && (
+          <Box sx={{ mt: 4, display: "flex", flexDirection: "column", gap: 4 }}>
+            <DynamicForm
+              config={patientDetailConfig}
+              data={patientField?.options?.find((p) => p.id === patient) || {}}
+              formSubmit={patientSubmit}
+            />
+            <DynamicForm config={dataConfig} formSubmit={surveySubmit} />
+          </Box>
+        )}
       </Container>
     </section>
   );
