@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import axiosInstance from "../utils/axiosConfig";
 import { convertSurveyConfig } from "../utils/ConvertSurveyConfig";
 import { patientDetailConfig } from "../config/patientDetailConfig";
+import { transformResponses } from "../utils/transformResponses";
 
 const SurveyDetails = () => {
   const [patient, setPatient] = useState("");
@@ -68,7 +69,8 @@ const SurveyDetails = () => {
 
   const surveySubmit = async (data) => {
     try {
-      console.log(data);
+      let res = transformResponses(dataConfig, data);
+      console.log(res, data);
     } catch (error) {
       console.log(error);
     }

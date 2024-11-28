@@ -1,36 +1,16 @@
-import React, { useState } from "react";
-import {
-  Card,
-  Typography,
-  Chip,
-  IconButton,
-  Box,
-  Menu,
-  MenuItem,
-} from "@mui/material";
-import { MoreHorizontal } from "lucide-react";
+import React from "react";
+import { Card, Typography, Chip, IconButton, Box } from "@mui/material";
+import { CirclePlusIcon, Edit, Eye } from "lucide-react";
 
 const SurveyCard = ({ id, title, status, date, responses }) => {
-  const [anchorEl, setAnchorEl] = useState(null);
-
-  const handleMenuClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
-
   const handleEdit = () => {
     // Handle edit action here
     console.log("Edit clicked");
-    setAnchorEl(null); // Close menu after action
   };
 
-  const handleView = () => {
+  const handleAdd = () => {
     // Handle view action here
     window.location.href = `/survey-details/${id}`;
-    setAnchorEl(null); // Close menu after action
   };
 
   return (
@@ -99,22 +79,17 @@ const SurveyCard = ({ id, title, status, date, responses }) => {
             fontSize: "12px",
           }}
         />
+
         {/* More Options */}
-        <IconButton onClick={handleMenuClick}>
-          <MoreHorizontal size={20} />
+        <IconButton>
+          <Eye size={20} />
         </IconButton>
-        {/* Menu with options */}
-        <Menu
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={handleMenuClose}
-          MenuListProps={{
-            "aria-labelledby": "basic-button",
-          }}
-        >
-          <MenuItem onClick={handleView}>Individual Responses</MenuItem>
-          <MenuItem onClick={handleEdit}>Summary</MenuItem>
-        </Menu>
+        <IconButton onClick={handleEdit}>
+          <Edit size={20} />
+        </IconButton>
+        <IconButton onClick={handleAdd}>
+          <CirclePlusIcon size={20} />
+        </IconButton>
       </Box>
     </Card>
   );
