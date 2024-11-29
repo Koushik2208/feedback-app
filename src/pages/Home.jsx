@@ -54,13 +54,16 @@ const Home = () => {
       fetchDepartments();
     } catch (error) {
       console.log("error : ", error);
+      alert(error.response.data.name[0]);
     }
   };
 
   const fetchDepartments = async () => {
     try {
       if (departmentField.options.length > 0) return;
-      const response = await axiosInstance.get(`/account/department/`);
+      const response = await axiosInstance.get(
+        `/account/department/?page_size=100`
+      );
       const options = response.data.results.map((d) => ({
         value: d.id,
         label: d.name,
