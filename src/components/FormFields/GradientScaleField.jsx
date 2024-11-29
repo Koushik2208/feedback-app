@@ -5,6 +5,7 @@ export const GradientScaleField = ({
   field, // Field object containing label, min, max, etc.
   value, // Current value of the scale
   onChange, // Function to handle value change
+  disabled,
 }) => {
   // Function to calculate thumb color
   const getThumbColor = (value) => {
@@ -64,6 +65,7 @@ export const GradientScaleField = ({
             transition: "background-color 0.3s ease, border-color 0.3s ease",
           },
         }}
+        disabled={disabled}
       />
     </Box>
   );

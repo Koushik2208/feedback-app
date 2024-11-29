@@ -77,6 +77,8 @@ const FillSurvey = () => {
         survey_title: survey_title,
         responses: res,
       });
+      alert("Survey submitted successfully!");
+      window.location.href = "/";
     } catch (error) {
       console.log(error);
     }

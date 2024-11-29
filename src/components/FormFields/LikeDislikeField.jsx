@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography, IconButton } from "@mui/material";
 import { likeDislikeOptions } from "../../constants/likeDislikeOptions";
 
-export const LikeDislikeField = ({ field, value, onChange }) => (
+export const LikeDislikeField = ({ field, value, onChange, disabled }) => (
   <Box>
     {/* Question */}
     <Typography component="legend" variant="h6" gutterBottom>
@@ -28,6 +28,7 @@ export const LikeDislikeField = ({ field, value, onChange }) => (
             "&:hover": { color: option.color },
             transition: "color 0.2s",
           }}
+          disabled={disabled}
         >
           {option.icon}
         </IconButton>
