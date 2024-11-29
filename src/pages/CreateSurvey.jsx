@@ -14,7 +14,6 @@ import {
 import {
   Trash2,
   Plus,
-  List,
   CheckSquare,
   Type,
   SquareMenu,
@@ -22,6 +21,7 @@ import {
   Star,
   Smile,
   Ruler,
+  CircleDot,
 } from "lucide-react";
 import { SelectField } from "../components/FormFields";
 import Header from "../components/Header";
@@ -46,7 +46,7 @@ const CreateSurvey = () => {
       questions_and_options: [
         {
           id: 1,
-          question_type: "Multiple Choice",
+          question_type: "Radio Button",
           question_text: "",
           options: [{ option_text: "" }, { option_text: "" }],
           required: false,
@@ -58,7 +58,7 @@ const CreateSurvey = () => {
   const questionTypes = [
     { value: "Short Answer", label: "Short Answer", icon: <Type /> },
     { value: "Dropdown", label: "Dropdown", icon: <SquareMenu /> },
-    { value: "Multiple Choice", label: "Multiple Choice", icon: <List /> },
+    { value: "Radio Button", label: "Radio Button", icon: <CircleDot /> },
     { value: "Check Boxes", label: "Check Boxes", icon: <CheckSquare /> },
     { value: "Star Rating", label: "Star Rating", icon: <Star /> },
     { value: "Emoji Rating", label: "Emoji Rating", icon: <Smile /> },
@@ -240,7 +240,7 @@ const CreateSurvey = () => {
 
         // Check options for questions with choices
         if (
-          ["Multiple Choice", "Check Boxes", "Dropdown"].includes(
+          ["Radio Button", "Check Boxes", "Dropdown"].includes(
             question.question_type
           )
         ) {
@@ -448,8 +448,8 @@ const CreateSurvey = () => {
                   sx={{ mb: 2 }}
                 />
 
-                {/* Options for Multiple Choice and Check Boxes */}
-                {(q.question_type === "Multiple Choice" ||
+                {/* Options for Radio Button and Check Boxes */}
+                {(q.question_type === "Radio Button" ||
                   q.question_type === "Check Boxes" ||
                   q.question_type === "Dropdown") && (
                   <Box>

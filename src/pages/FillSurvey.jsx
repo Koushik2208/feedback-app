@@ -9,7 +9,7 @@ import { convertSurveyConfig } from "../utils/ConvertSurveyConfig";
 import { patientDetailConfig } from "../config/patientDetailConfig";
 import { transformResponses } from "../utils/transformResponses";
 
-const SurveyDetails = () => {
+const FillSurvey = () => {
   const [patient, setPatient] = useState("");
   const [dataConfig, setDataConfig] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -20,7 +20,7 @@ const SurveyDetails = () => {
     options: [],
   });
 
-  const { department_id } = useParams();
+  const { department_id, survey_title } = useParams();
 
   const handleChange = (field, value) => {
     setPatient(value);
@@ -29,7 +29,7 @@ const SurveyDetails = () => {
   const fetchSurvey = async () => {
     try {
       const response = await axiosInstance.get(
-        `/account/get_survey_by_department/?department_id=${department_id}`
+        `/account/get_survey_by_department/?department_id=${department_id}&survey_title=${survey_title}`
       );
       let config = convertSurveyConfig(response.data?.[0]);
       console.log(config, response.data?.[0]);
@@ -70,7 +70,12 @@ const SurveyDetails = () => {
   const surveySubmit = async (data) => {
     try {
       let res = transformResponses(dataConfig, data);
-      console.log(res, data);
+      console.log(res);
+      await axiosInstance.post(`/account/submit_survey_response/`, {
+        patient_id: patient,
+        department_id: department_id,
+        responses: res,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -83,7 +88,7 @@ const SurveyDetails = () => {
 
   return (
     <section className="nav-space">
-      <Header title={dataConfig?.title || "Survey Details"} />
+      <Header title={dataConfig?.title || "Fill Survey"} />
       <Container maxWidth="md">
         <SelectField
           field={patientField}
@@ -107,4 +112,4 @@ const SurveyDetails = () => {
   );
 };
 
-export { SurveyDetails };
+export { FillSurvey };

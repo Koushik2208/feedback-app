@@ -2,7 +2,7 @@ import React from "react";
 import { ThemeProvider, createTheme, CssBaseline } from "@mui/material";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import DynamicForm from "./components/DynamicForm";
-import { Home, Login, CreateSurvey, SurveyDetails } from "./pages";
+import { Home, Login, CreateSurvey, FillSurvey, ViewSurvey } from "./pages";
 import Navbar from "./components/Navbar/Navbar";
 import ProtectedRoute from "./utils/ProtectedRoute";
 
@@ -55,8 +55,12 @@ function App() {
               <Route index element={<Home />} />
               <Route path="create-survey" element={<CreateSurvey />} />
               <Route
-                path="survey-details/:department_id"
-                element={<SurveyDetails />}
+                path="fill-survey/:survey_title/:department_id"
+                element={<FillSurvey />}
+              />
+              <Route
+                path="view-survey/:survey_title"
+                element={<ViewSurvey />}
               />
               <Route path="dynamic-form" element={<DynamicForm />} />
             </Route>

@@ -8,9 +8,13 @@ const SurveyCard = ({ id, title, status, date, responses }) => {
     console.log("Edit clicked");
   };
 
-  const handleAdd = () => {
+  const handleView = () => {
     // Handle view action here
-    window.location.href = `/survey-details/${id}`;
+    window.location.href = `/view-survey/${title}`;
+  };
+
+  const handleAdd = () => {
+    window.location.href = `/fill-survey/${title}/${id}`;
   };
 
   return (
@@ -82,7 +86,7 @@ const SurveyCard = ({ id, title, status, date, responses }) => {
 
         {/* More Options */}
         <IconButton>
-          <Eye size={20} />
+          <Eye size={20} onClick={handleView} />
         </IconButton>
         <IconButton onClick={handleEdit}>
           <Edit size={20} />

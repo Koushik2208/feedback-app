@@ -1,7 +1,7 @@
 export const convertSurveyConfig = (inputSurvey) => {
   // Map question types to form field types
   const typeMapping = {
-    "Multiple Choice": "radio",
+    "Radio Button": "radio",
     Dropdown: "select",
     "Short Answer": "text",
     Paragraph: "textarea",

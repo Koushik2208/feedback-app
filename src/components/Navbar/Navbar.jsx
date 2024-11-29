@@ -11,7 +11,7 @@ import Searchbar from "../Searchbar/Searchbar";
 const Navbar = () => {
   return (
     <>
-      <Box sx={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 1 }}>
+      <Box sx={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 10 }}>
         <section className={styles.navbar}>
           <img
             src={require(".././images/logo.webp")}
