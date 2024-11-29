@@ -10,15 +10,18 @@ const IndividualResponses = () => {
   const [patient, setPatient] = useState("");
   const [config, setConfig] = useState(null);
   const [data, setData] = useState(null);
+  const [disableAfterTimeout, setDisableAfterTimeout] = useState(false);
 
   const [patientField, setPatientField] = useState({
     name: "patient",
     placeholder: "--Select Patient--",
     options: [],
   });
+
   const handleChange = (field, value) => {
     setPatient(value);
   };
+
   const fetchPatientRecords = async () => {
     try {
       if (patientField.options.length > 0) return;
@@ -39,17 +42,20 @@ const IndividualResponses = () => {
 
   const fetchPatientResponse = async () => {
     try {
-      if (!patient) return;
       const response = await axiosInstance.get(
         `/account/get_survey_response_by_patient/?patient_id=${patient}`
       );
       let config = await convertSurveyConfig(response.data);
       let kv = await convertSurveyToKeyValuePairs(config);
       config.noSubmit = true;
-      config.disableForm = true;
       setData(kv);
-      console.log(config, kv);
       setConfig(config);
+
+      // Enable form initially and set timeout to disable it
+      setDisableAfterTimeout(false);
+      setTimeout(() => {
+        setDisableAfterTimeout(true);
+      }, 100); // Disable after 5 seconds
     } catch (error) {
       console.log(error);
     }
@@ -59,6 +65,7 @@ const IndividualResponses = () => {
     fetchPatientRecords();
     fetchPatientResponse();
   }, [patient]);
+
   return (
     <div>
       <Box sx={{ mb: 4 }}>
@@ -68,7 +75,13 @@ const IndividualResponses = () => {
           onChange={handleChange}
         />
       </Box>
-      {config && <DynamicForm config={config} data={data} />}
+      {config && (
+        <DynamicForm
+          key={`${patient}`} // Force re-render on patient change
+          config={{ ...config, disableForm: disableAfterTimeout }}
+          data={data}
+        />
+      )}
     </div>
   );
 };

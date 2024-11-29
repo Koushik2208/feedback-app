@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import { emotions } from "../../constants/emotions";
 
-export const EmotionField = ({ field, value, onChange, disabled }) => (
+export const EmotionField = ({ field, value, onChange, disabled = false }) => (
   <Box>
     <Typography component="legend">{field.label}</Typography>
     <Box
@@ -17,33 +17,57 @@ export const EmotionField = ({ field, value, onChange, disabled }) => (
       {emotions.map((emotion) => (
         <Box
           key={emotion.value}
-          onClick={() => !disabled && onChange(field.name, emotion.value)}
+          onClick={() =>
+            !disabled && onChange(field.name, JSON.stringify(emotion.value))
+          }
           sx={{
             cursor: disabled ? "not-allowed" : "pointer",
             p: 2,
             borderRadius: 2,
             transition: "all 0.2s",
             backgroundColor: "transparent",
-            opacity: disabled ? 0.5 : 1,
+            opacity:
+              disabled && value !== JSON.stringify(emotion.value) ? 0.5 : 1, // Grayed out if disabled and not selected
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             gap: 1,
-            color: value === emotion.value ? emotion.color : "#64748b", // Selected state text color
+            color:
+              value === JSON.stringify(emotion.value)
+                ? emotion.color
+                : "#64748b", // Default or selected state color
             "&:hover": {
-              color: !disabled && emotion.color, // Hover color
-              "& .MuiTypography-root": {
-                color: emotion.color, // Hover effect for the label
+              color: !disabled ? emotion.color : undefined, // Hover effect only if not disabled
+              "& .emotion-icon": {
+                color: !disabled ? emotion.color : undefined, // Change icon color on hover
+              },
+              "& .emotion-label": {
+                color: !disabled ? emotion.color : undefined, // Change label color on hover
               },
             },
           }}
         >
-          <Box>{emotion.icon}</Box>
+          <Box
+            className="emotion-icon"
+            sx={{
+              transition: "color 0.2s",
+              color:
+                value === JSON.stringify(emotion.value)
+                  ? emotion.color
+                  : "#64748b",
+            }}
+          >
+            {emotion.icon}
+          </Box>
           <Typography
-            className="MuiTypography-root"
+            className="emotion-label"
             sx={{
               fontWeight: 400,
-              color: value === emotion.value ? emotion.color : "#64748b", // Selected state label color
+              transition: "color 0.2s",
+              color:
+                value === JSON.stringify(emotion.value)
+                  ? emotion.color
+                  : "#64748b", // Default or selected state color
             }}
           >
             {emotion.label}
