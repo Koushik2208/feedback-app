@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, FormLabel, TextField as MuiTextField } from "@mui/material";
 
-export const TextField = ({ field, value, onChange }) => (
+export const TextField = ({ field, value, onChange, disabled }) => (
   <Box>
     {field.labelOnTop && (
       <FormLabel sx={{ fontSize: "14px", fontWeight: "bold" }}>
@@ -16,6 +16,7 @@ export const TextField = ({ field, value, onChange }) => (
       onChange={(e) => onChange(field.name, e.target.value)}
       required={field.required}
       fullWidth
+      disabled={disabled}
       sx={{
         "& .MuiOutlinedInput-root": {
           borderRadius: "10px", // Customize border radius here

@@ -25,6 +25,7 @@ const ViewSurvey = () => {
   const handleTabChange = (newValue) => {
     setSelectedTab(newValue);
   };
+
   return (
     <section className="nav-space">
       <Header title={"Survey Form"} />

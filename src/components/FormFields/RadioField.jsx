@@ -8,7 +8,7 @@ import {
   Box,
 } from "@mui/material";
 
-export const RadioField = ({ field, value, onChange }) => (
+export const RadioField = ({ field, value, onChange, disabled }) => (
   <FormControl sx={{ width: "100%" }}>
     <Box
       sx={{
@@ -53,6 +53,7 @@ export const RadioField = ({ field, value, onChange }) => (
               value={option.value}
               control={<Radio />}
               label={option.label}
+              disabled={disabled}
             />
           ))}
         </RadioGroup>

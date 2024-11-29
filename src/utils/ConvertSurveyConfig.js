@@ -15,7 +15,6 @@ export const convertSurveyConfig = (inputSurvey) => {
 
   // Convert the survey configuration
   const convertedConfig = {
-    // title: inputSurvey.survey_title,
     sections: inputSurvey.sections.map((section) => ({
       title: section.section_title,
       fields: section.questions_and_options.map((question) => {
@@ -31,6 +30,11 @@ export const convertSurveyConfig = (inputSurvey) => {
           label: question.question_text,
         };
 
+        // Add response if it exists
+        if (question.hasOwnProperty("response")) {
+          fieldConfig.response = question.response;
+        }
+
         // Add options for select, radio, and checkbox types
         if (
           [
@@ -43,10 +47,19 @@ export const convertSurveyConfig = (inputSurvey) => {
           ].includes(fieldType) &&
           question.options
         ) {
-          fieldConfig.options = question.options.map((option) => ({
-            label: option.option_text,
-            value: option.option_text,
-          }));
+          fieldConfig.options = question.options.map((option) => {
+            const optionConfig = {
+              label: option.option_text,
+              value: option.option_text,
+            };
+
+            // Add is_selected for radio and checkbox types if present
+            if (option.hasOwnProperty("is_selected")) {
+              optionConfig.is_selected = option.is_selected;
+            }
+
+            return optionConfig;
+          });
         }
 
         // Add special configurations for specific types

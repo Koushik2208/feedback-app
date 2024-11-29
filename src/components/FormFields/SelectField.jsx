@@ -1,7 +1,7 @@
 import React from "react";
 import { FormControl, FormLabel, Select, MenuItem } from "@mui/material";
 
-export const SelectField = ({ field, value, onChange }) => (
+export const SelectField = ({ field, value, onChange, disabled }) => (
   <FormControl fullWidth>
     {field.label && (
       <FormLabel sx={{ fontSize: "14px", mb: 1 }}>{field.label}</FormLabel>
@@ -22,6 +22,7 @@ export const SelectField = ({ field, value, onChange }) => (
         },
       }}
       displayEmpty
+      disabled={disabled}
     >
       <MenuItem value="" disabled sx={{ fontSize: "14px" }}>
         {field.placeholder}

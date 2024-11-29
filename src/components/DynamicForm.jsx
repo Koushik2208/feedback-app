@@ -89,6 +89,7 @@ const DynamicForm = ({ config = defaultConfig, formSubmit, data = {} }) => {
                           field={field}
                           value={formData[field.name]}
                           onChange={handleFieldChange}
+                          disabled={config.disableForm}
                         />
                       </Box>
                     ))}

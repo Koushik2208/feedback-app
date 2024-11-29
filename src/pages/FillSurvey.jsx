@@ -44,8 +44,8 @@ const FillSurvey = () => {
 
   const fetchPatientRecords = async () => {
     try {
-      const response = await axiosInstance.get("/account/patient_records/");
-      let options = response.data.results.map((patient) => ({
+      const response = await axiosInstance.get("/account/get_patient/");
+      let options = response.data.map((patient) => ({
         ...patient,
         value: patient.id,
         label: patient.patient_name,
@@ -74,6 +74,7 @@ const FillSurvey = () => {
       await axiosInstance.post(`/account/submit_survey_response/`, {
         patient_id: patient,
         department_id: department_id,
+        survey_title: survey_title,
         responses: res,
       });
     } catch (error) {

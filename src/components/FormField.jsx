@@ -15,7 +15,7 @@ import {
   FileUploadField,
 } from "./FormFields";
 
-const FormField = ({ field, value, onChange, width }) => {
+const FormField = ({ field, value, onChange, width, disabled }) => {
   const fieldComponents = {
     text: TextField,
     password: PasswordField,
@@ -40,7 +40,13 @@ const FormField = ({ field, value, onChange, width }) => {
   }
 
   return (
-    <Component field={field} value={value} onChange={onChange} width={width} />
+    <Component
+      field={field}
+      value={value}
+      onChange={onChange}
+      width={width}
+      disabled={disabled}
+    />
   );
 };
 
