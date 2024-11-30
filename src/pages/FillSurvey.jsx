@@ -44,8 +44,8 @@ const FillSurvey = () => {
 
   const fetchPatientRecords = async () => {
     try {
-      const response = await axiosInstance.get("/account/get_patient/");
-      let options = response.data.map((patient) => ({
+      const response = await axiosInstance.get("/account/patient_records/");
+      let options = response.data.results.map((patient) => ({
         ...patient,
         value: patient.id,
         label: patient.patient_name,

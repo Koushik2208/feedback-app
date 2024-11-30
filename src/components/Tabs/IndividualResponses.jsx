@@ -5,12 +5,15 @@ import DynamicForm from "../DynamicForm";
 import { Box } from "@mui/material";
 import { convertSurveyConfig } from "../../utils/ConvertSurveyConfig";
 import { convertSurveyToKeyValuePairs } from "../../utils/ConvertSurveyToKeyValuePairs";
+import { useParams } from "react-router-dom";
 
 const IndividualResponses = () => {
   const [patient, setPatient] = useState("");
   const [config, setConfig] = useState(null);
   const [data, setData] = useState(null);
   const [disableAfterTimeout, setDisableAfterTimeout] = useState(false);
+
+  const { survey_title } = useParams();
 
   const [patientField, setPatientField] = useState({
     name: "patient",
@@ -25,7 +28,9 @@ const IndividualResponses = () => {
   const fetchPatientRecords = async () => {
     try {
       if (patientField.options.length > 0) return;
-      const response = await axiosInstance.get("/account/get_patient/");
+      const response = await axiosInstance.get(
+        `/account/get_patient/?survey_title=${survey_title}`
+      );
       let options = response.data.map((patient) => ({
         ...patient,
         value: patient.id,
@@ -42,6 +47,7 @@ const IndividualResponses = () => {
 
   const fetchPatientResponse = async () => {
     try {
+      if (patient === "") return;
       const response = await axiosInstance.get(
         `/account/get_survey_response_by_patient/?patient_id=${patient}`
       );
@@ -55,7 +61,7 @@ const IndividualResponses = () => {
       setDisableAfterTimeout(false);
       setTimeout(() => {
         setDisableAfterTimeout(true);
-      }, 100); // Disable after 5 seconds
+      }, 1000); // Disable after 5 seconds
     } catch (error) {
       console.log(error);
     }
