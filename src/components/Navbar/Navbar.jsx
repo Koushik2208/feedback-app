@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { Outlet } from "react-router-dom";
 
 import Avatar from "@mui/material/Avatar";
@@ -26,6 +26,16 @@ const Navbar = () => {
             src={require(".././images/avatar.png")}
             style={{ marginLeft: "auto" }}
           />
+          <Button
+            variant="contained"
+            style={{ marginLeft: "10px" }}
+            onClick={() => {
+              localStorage.clear();
+              window.location.href = "/login";
+            }}
+          >
+            Logout
+          </Button>
         </section>
       </Box>
       <Outlet />
