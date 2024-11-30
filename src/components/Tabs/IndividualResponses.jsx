@@ -12,6 +12,7 @@ const IndividualResponses = () => {
   const [config, setConfig] = useState(null);
   const [data, setData] = useState(null);
   const [disableAfterTimeout, setDisableAfterTimeout] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { survey_title } = useParams();
 
@@ -22,7 +23,11 @@ const IndividualResponses = () => {
   });
 
   const handleChange = (field, value) => {
+    // Reset states when patient changes
     setPatient(value);
+    setConfig(null);
+    setData(null);
+    setDisableAfterTimeout(false);
   };
 
   const fetchPatientRecords = async () => {
@@ -46,31 +51,50 @@ const IndividualResponses = () => {
   };
 
   const fetchPatientResponse = async () => {
+    // If no patient is selected, exit early
+    if (patient === "") return;
+
     try {
-      if (patient === "") return;
+      setIsLoading(true);
       const response = await axiosInstance.get(
         `/account/get_survey_response_by_patient/?patient_id=${patient}`
       );
+
       let config = await convertSurveyConfig(response.data);
       let kv = await convertSurveyToKeyValuePairs(config);
+
+      // Modify config to disable submit and prevent re-submission
       config.noSubmit = true;
+
+      // Update states with new data
       setData(kv);
       setConfig(config);
 
-      // Enable form initially and set timeout to disable it
+      // Reset disable state and set timeout to disable form
       setDisableAfterTimeout(false);
       setTimeout(() => {
         setDisableAfterTimeout(true);
       }, 1000); // Disable after 5 seconds
     } catch (error) {
-      console.log(error);
+      console.error("Error fetching patient response:", error);
+      // Reset config and data if fetch fails
+      setConfig(null);
+      setData(null);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
     fetchPatientRecords();
-    fetchPatientResponse();
-  }, [patient]);
+  }, []); // Only run once on component mount
+
+  useEffect(() => {
+    // Fetch patient response whenever patient changes
+    if (patient) {
+      fetchPatientResponse();
+    }
+  }, [patient]); // Depend only on patient
 
   return (
     <div>
@@ -81,13 +105,20 @@ const IndividualResponses = () => {
           onChange={handleChange}
         />
       </Box>
-      {config && (
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : config && data ? (
         <DynamicForm
-          key={`${patient}`} // Force re-render on patient change
-          config={{ ...config, disableForm: disableAfterTimeout }}
+          key={patient} // Force re-render on patient change
+          config={{
+            ...config,
+            disableForm: disableAfterTimeout,
+          }}
           data={data}
         />
-      )}
+      ) : patient && !isLoading ? (
+        <div>No survey response found for this patient.</div>
+      ) : null}
     </div>
   );
 };
