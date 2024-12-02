@@ -4,7 +4,7 @@ import { Box, FormLabel, TextField as MuiTextField } from "@mui/material";
 export const TextField = ({ field, value, onChange, disabled }) => (
   <Box>
     {field.labelOnTop && (
-      <FormLabel sx={{ fontSize: "14px", fontWeight: "bold" }}>
+      <FormLabel sx={{ fontSize: "14px", fontWeight: "bold", mb: 2 }}>
         {field.label}{" "}
         {field.required && <span style={{ color: "red" }}>*</span>}
       </FormLabel>

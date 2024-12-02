@@ -4,7 +4,11 @@ import { FormControl, FormLabel, Select, MenuItem } from "@mui/material";
 export const SelectField = ({ field, value, onChange, disabled }) => (
   <FormControl fullWidth>
     {field.label && (
-      <FormLabel sx={{ fontSize: "14px", mb: 1 }}>{field.label}</FormLabel>
+      <FormLabel
+        sx={{ fontSize: "14px", mb: 2, fontWeight: "bold", color: "#0009" }}
+      >
+        {field.label}
+      </FormLabel>
     )}
     <Select
       value={value || ""}

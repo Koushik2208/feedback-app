@@ -13,27 +13,26 @@ export const RadioField = ({ field, value, onChange, disabled }) => (
     <Box
       sx={{
         display: "flex",
-        flexWrap: "wrap",
-        alignItems: "center",
+        flexDirection: "column", // Always stack label and options vertically
+        alignItems: "flex-start",
         width: "100%",
       }}
     >
       <Box
         sx={{
-          flex: { xs: "1 1 100%", sm: "1 1 50%" }, // Full width on small screens, 50% on larger screens
-          maxWidth: { xs: "100%", sm: "50%" }, // Adjust maxWidth accordingly
+          width: "100%",
           boxSizing: "border-box",
-          padding: 1, // Optional padding for spacing
+          paddingBottom: 1,
         }}
       >
-        <FormLabel>{field.label}</FormLabel>
+        <FormLabel sx={{ fontSize: "14px", fontWeight: "bold" }}>
+          {field.label}
+        </FormLabel>
       </Box>
       <Box
         sx={{
-          flex: { xs: "1 1 100%", sm: "1 1 50%" }, // Full width on small screens, 50% on larger screens
-          maxWidth: { xs: "100%", sm: "50%" },
+          width: "100%",
           boxSizing: "border-box",
-          padding: 1, // Optional padding for spacing
         }}
       >
         <RadioGroup
@@ -41,10 +40,12 @@ export const RadioField = ({ field, value, onChange, disabled }) => (
           onChange={(e) => onChange(field.name, e.target.value)}
           sx={{
             display: "flex",
+            flexWrap: "wrap", // Allow wrapping for desktop
             flexDirection: {
-              xs: "column", // Column direction on extra-small screens
-              sm: "row", // Row direction on small screens and above
+              xs: "column", // Stack options vertically on small screens
+              sm: "row", // Arrange options in a row on larger screens
             },
+            gap: 1, // Add spacing between options
           }}
         >
           {field.options.map((option) => (
@@ -54,6 +55,10 @@ export const RadioField = ({ field, value, onChange, disabled }) => (
               control={<Radio />}
               label={option.label}
               disabled={disabled}
+              sx={{
+                flex: "1 1 auto", // Allow items to grow and wrap properly
+                margin: 0, // Reset default margin for consistent spacing
+              }}
             />
           ))}
         </RadioGroup>

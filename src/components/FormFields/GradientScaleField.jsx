@@ -30,7 +30,11 @@ export const GradientScaleField = ({
   return (
     <Box>
       {/* Label */}
-      <Typography component="legend" gutterBottom>
+      <Typography
+        component="legend"
+        sx={{ fontSize: "14px", fontWeight: "bold", color: "#0009" }}
+        gutterBottom
+      >
         {field.label}
       </Typography>
 

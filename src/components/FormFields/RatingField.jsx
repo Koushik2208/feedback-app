@@ -4,7 +4,12 @@ import { Star } from "lucide-react";
 
 export const RatingField = ({ field, value, onChange, disabled }) => (
   <Box>
-    <Typography component="legend">{field.label}</Typography>
+    <Typography
+      component="legend"
+      sx={{ fontSize: "14px", fontWeight: "bold", color: "#0009", mb: 2 }}
+    >
+      {field.label}
+    </Typography>
     <Rating
       value={value || 0}
       onChange={(_, newValue) => onChange(field.name, newValue)}

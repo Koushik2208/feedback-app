@@ -4,7 +4,12 @@ import { emotions } from "../../constants/emotions";
 
 export const EmotionField = ({ field, value, onChange, disabled = false }) => (
   <Box>
-    <Typography component="legend">{field.label}</Typography>
+    <Typography
+      component="legend"
+      sx={{ fontSize: "14px", fontWeight: "bold", color: "#0009" }}
+    >
+      {field.label}
+    </Typography>
     <Box
       sx={{
         display: "flex",

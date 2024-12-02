@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Create an Axios instance
 const axiosInstance = axios.create({
-  baseURL: "https://api-survey.krisantec.com/",
+  baseURL: "http://192.168.0.110:1234/",
 });
 
 axiosInstance.interceptors.request.use((config) => {

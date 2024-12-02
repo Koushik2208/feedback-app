@@ -3,7 +3,12 @@ import { Box, Typography, Slider } from "@mui/material";
 
 export const SliderField = ({ field, value, onChange, disabled }) => (
   <Box>
-    <Typography component="legend">{field.label}</Typography>
+    <Typography
+      component="legend"
+      sx={{ fontSize: "14px", fontWeight: "bold", color: "#0009" }}
+    >
+      {field.label}
+    </Typography>
     <Slider
       value={value || 0}
       onChange={(_, newValue) => onChange(field.name, newValue)}
